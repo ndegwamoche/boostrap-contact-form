@@ -18,7 +18,7 @@ if (!class_exists('BCF_Admin')) {
         {
             add_menu_page('Bootstrap Contact Form', 'BCF', 'manage_options', 'bootstrap-contact-form', array($this, 'bcf_admin_menu_html'), 'dashicons-email-alt2', 100);
             add_submenu_page('bootstrap-contact-form', 'Bootstrap Contact Form', 'BCF Settings', 'manage_options', 'bootstrap-contact-form', array($this, 'bcf_admin_menu_html'));
-            add_submenu_page('bootstrap-contact-form', 'Bootstrap Contact Form Options', 'BCF Options', 'manage_options', 'bootstrap-contact-form-options', array($this, 'bcf_options_admin_submenu_html'));
+            add_submenu_page('bootstrap-contact-form', 'Bootstrap Contact Form Options', 'BCF Templates', 'manage_options', 'bootstrap-contact-form-options', array($this, 'bcf_options_admin_submenu_html'));
         }
 
         function bcf_admin_menu_html()

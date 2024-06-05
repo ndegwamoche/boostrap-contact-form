@@ -18,10 +18,14 @@ if (!class_exists('BCF')) {
 
     class BCF
     {
-        function __construct() {
+        function __construct()
+        {
             //call admin section
             require_once plugin_dir_path(__FILE__) . 'admin/admin.php';
+            require_once plugin_dir_path(__FILE__) . 'templates/contact-form.php';
+
             $admin = new BCF_Admin();
+            $contact_form = new Contact_Form();
         }
     }
 
