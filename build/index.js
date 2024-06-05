@@ -2,6 +2,52 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./src/modules/contact-form-block.js":
+/*!*******************************************!*\
+  !*** ./src/modules/contact-form-block.js ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
+/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__);
+
+
+
+
+class BootstrapContactFormBlock {
+  constructor() {
+    this.registerBlock();
+  }
+  registerBlock() {
+    (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.registerBlockType)('bcf/bootstrap-contact-form', {
+      title: 'Bootstrap Contact Form',
+      icon: 'email',
+      category: 'widgets',
+      edit: () => {
+        const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps)();
+        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.Fragment, {});
+      },
+      save: () => {
+        const blockProps = _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps.save();
+        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.Fragment, {});
+      }
+    });
+  }
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (BootstrapContactFormBlock);
+
+/***/ }),
+
 /***/ "./src/modules/contact-form.js":
 /*!*************************************!*\
   !*** ./src/modules/contact-form.js ***!
@@ -48,16 +94,19 @@ class ContactForm {
       };
       jquery__WEBPACK_IMPORTED_MODULE_0___default().ajax({
         url: tubidy_site_data.root_url + "/wp-json/bcf/v1/submit-message",
-        method: 'POST',
+        method: "POST",
         beforeSend: xhr => {
           xhr.setRequestHeader("X-WP-Nonce", tubidy_site_data.nonce);
         },
         data: data,
         success: function (response) {
-          console.log(response);
+          jquery__WEBPACK_IMPORTED_MODULE_0___default()('.contact-form').addClass("d-none");
+          jquery__WEBPACK_IMPORTED_MODULE_0___default()(".bcf-form-fields").html(`<div class="alert alert-success" role="alert">${response.message}</div>`);
         },
         error: function (response) {
-          console.log(response);
+          jquery__WEBPACK_IMPORTED_MODULE_0___default()("#error-submit").removeClass("d-none");
+          jquery__WEBPACK_IMPORTED_MODULE_0___default()("#error-submit").addClass("d-inline");
+          jquery__WEBPACK_IMPORTED_MODULE_0___default()("#error-submit").html(response.responseJSON.message);
         }
       });
     }
@@ -68,7 +117,7 @@ class ContactForm {
     Object.keys(this.fields).forEach(field => {
       const value = this.fields[field].val();
       const errorField = this.errors[field];
-      if (!value || field === 'email' && !this.validateEmail(value)) {
+      if (!value || field === "email" && !this.validateEmail(value)) {
         errorField.removeClass("d-none").addClass("d-inline").html(this.getErrorMessage(field));
         if (!firstInvalidField) {
           firstInvalidField = this.fields[field];
@@ -101,6 +150,26 @@ class ContactForm {
 
 /***/ }),
 
+/***/ "react":
+/*!************************!*\
+  !*** external "React" ***!
+  \************************/
+/***/ ((module) => {
+
+module.exports = window["React"];
+
+/***/ }),
+
+/***/ "react/jsx-runtime":
+/*!**********************************!*\
+  !*** external "ReactJSXRuntime" ***!
+  \**********************************/
+/***/ ((module) => {
+
+module.exports = window["ReactJSXRuntime"];
+
+/***/ }),
+
 /***/ "jquery":
 /*!*************************!*\
   !*** external "jQuery" ***!
@@ -108,6 +177,26 @@ class ContactForm {
 /***/ ((module) => {
 
 module.exports = window["jQuery"];
+
+/***/ }),
+
+/***/ "@wordpress/block-editor":
+/*!*************************************!*\
+  !*** external ["wp","blockEditor"] ***!
+  \*************************************/
+/***/ ((module) => {
+
+module.exports = window["wp"]["blockEditor"];
+
+/***/ }),
+
+/***/ "@wordpress/blocks":
+/*!********************************!*\
+  !*** external ["wp","blocks"] ***!
+  \********************************/
+/***/ ((module) => {
+
+module.exports = window["wp"]["blocks"];
 
 /***/ })
 
@@ -187,8 +276,11 @@ var __webpack_exports__ = {};
   \**********************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_contact_form__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/contact-form */ "./src/modules/contact-form.js");
+/* harmony import */ var _modules_contact_form_block__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/contact-form-block */ "./src/modules/contact-form-block.js");
+
 
 const contactForm = new _modules_contact_form__WEBPACK_IMPORTED_MODULE_0__["default"]();
+const contactBlock = new _modules_contact_form_block__WEBPACK_IMPORTED_MODULE_1__["default"]();
 })();
 
 /******/ })()

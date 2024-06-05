@@ -6,26 +6,24 @@ if (!defined('ABSPATH')) {
 
 ?>
 
-<div class="row">
-    <div class="col-lg-5 contact-info__wrapper p-5 order-lg-1">
+<div class="row bcf-form">
+    <div class="col-lg-5 contact-info__wrapper p-5 order-lg-1 bcf-form-info">
         <h3 class="color--white mb-5">Get in Touch</h3>
 
         <ul class="contact-info__list list-style--none position-relative z-index-101">
             <li class="mb-4 pl-4">
-                <i class="fa fa-envelope"></i>&nbsp;&nbsp;support@bootdey.com
+                <i class="fa fa-envelope"></i>&nbsp;&nbsp;<?php echo esc_html(get_option('bcf_recipient_email'));?>
             </li>
             <li class="mb-4 pl-4">
-                <i class="fa fa-phone"></i>&nbsp;&nbsp;(021)-241454-545
+                <i class="fa fa-phone"></i>&nbsp;&nbsp;<?php echo esc_html(get_option('bcf_recipient_phone_number'));?>
             </li>
             <li class="mb-4 pl-4">
-                <i class="fa fa-map-marker-alt"></i> Bootdey Technologies Inc.
-                <br> 2694 Queen City Rainbow Drive
-                <br> Florida 99161
+                <i class="fa fa-map-marker-alt"></i><?php echo esc_html(get_option('bcf_website_location'));?>
             </li>
         </ul>
     </div>
 
-    <div class="col-lg-7 contact-form__wrapper p-5 order-lg-2">
+    <div class="col-lg-7 contact-form__wrapper p-5 order-lg-2 bcf-form-fields">
         <form action="#" class="contact-form form-validate" id="bcf-contact-form" onsubmit="return false;">
             <div class="row">
                 <div class="col-sm-6 mb-3">
@@ -61,13 +59,16 @@ if (!defined('ABSPATH')) {
 
                 <div class="col-sm-12 mb-3">
                     <div class="form-group">
-                        <label class="required-field" for="message">How can we help? <small class="text-danger">*</small><small id="error-message" class="form-text text-danger d-none"></small></label>
+                        <label class="required-field" for="message">How can we help? <small class="text-danger">*</small></label>
                         <textarea class="form-control" id="message" name="message" rows="7" style="height:auto;" placeholder="Hi there, I would like to....."></textarea>
+                        <small id="error-message" class="form-text text-danger d-none" role="alert"></small>
                     </div>
                 </div>
 
                 <div class="col-sm-12 mb-3">
-                    <button type="submit" name="submit" class="btn btn-info send-message">Submit</button>
+                    
+                    <button type="submit" name="submit" class="btn btn-info send-message">Submit</button><br/>
+                    <small id="error-submit" class="form-text text-danger d-none"></small>
                 </div>
 
             </div>

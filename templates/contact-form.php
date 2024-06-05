@@ -49,26 +49,25 @@ if (!class_exists('Contact_Form')) {
 
             // Send an email notification
             $admin_email = get_option('bcf_admin_email');
-            if (!is_email($admin_email)) {
-                return new WP_Error('invalid_admin_email', 'Invalid admin email', array('status' => 500));
-            }
 
             $subject = 'New Contact Form Submission';
             $body = "You have received a new message from $email:\n\n$message";
-            $headers = array('Content-Type: text/plain; charset=UTF-8');
+            $headers = array('Content-Type: text/plain; charset=UTF-8','Disposition-Notification-To: yourEmailID\n');
 
             wp_mail($admin_email, $subject, $body, $headers);
 
+            //return new WP_Error('missing_data', 'Required data is missing', array('status' => 422));
+  
             return new WP_REST_Response(array(
                 'email' => $email,
-                'message' => $message,
+                'message' => esc_html(get_option('bcf_submitter_message')),
                 'status' => 'success'
             ), 200);
         }
 
         function bcf_contact_form_enqueue_scripts()
         {
-            wp_enqueue_script('bcf_contact_form_script', plugin_dir_url(dirname(__FILE__))  . '/build/index.js', array(), false, true);
+            wp_enqueue_script('bcf_contact_form_script', plugin_dir_url(dirname(__FILE__))  . 'build/index.js', array(), false, true);
         }
     }
 }
