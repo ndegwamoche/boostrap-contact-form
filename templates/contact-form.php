@@ -52,12 +52,12 @@ if (!class_exists('Contact_Form')) {
 
             $subject = 'New Contact Form Submission';
             $body = "You have received a new message from $email:\n\n$message";
-            $headers = array('Content-Type: text/plain; charset=UTF-8','Disposition-Notification-To: yourEmailID\n');
+            $headers = array('Content-Type: text/plain; charset=UTF-8', 'Disposition-Notification-To: yourEmailID\n');
 
             wp_mail($admin_email, $subject, $body, $headers);
 
             //return new WP_Error('missing_data', 'Required data is missing', array('status' => 422));
-  
+
             return new WP_REST_Response(array(
                 'email' => $email,
                 'message' => esc_html(get_option('bcf_submitter_message')),
@@ -67,7 +67,14 @@ if (!class_exists('Contact_Form')) {
 
         function bcf_contact_form_enqueue_scripts()
         {
+            wp_enqueue_script('bcf_contact_form_script_front', '//code.jquery.com/jquery-3.7.1.min.js', array(), false, true);
+            wp_enqueue_style('bcf_font_awesome_front', '//cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/fontawesome.min.css');
             wp_enqueue_script('bcf_contact_form_script', plugin_dir_url(dirname(__FILE__))  . 'build/index.js', array(), false, true);
+
+            wp_localize_script('bcf_contact_form_constants', 'bcf_contact_form_data', array(
+                'root_url' => get_site_url(),
+                'nonce' => wp_create_nonce('wp_rest')
+            ));
         }
     }
 }

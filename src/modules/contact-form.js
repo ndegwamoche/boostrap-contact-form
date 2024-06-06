@@ -35,10 +35,10 @@ class ContactForm {
       };
 
       $.ajax({
-        url: tubidy_site_data.root_url + "/wp-json/bcf/v1/submit-message",
+        url: bcf_contact_form_data.root_url + "/wp-json/bcf/v1/submit-message",
         method: "POST",
         beforeSend: xhr => {
-          xhr.setRequestHeader("X-WP-Nonce", tubidy_site_data.nonce);
+          xhr.setRequestHeader("X-WP-Nonce", bcf_contact_form_data.nonce);
         },
         data: data,
         success: function (response) {

@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "build": "wp-scripts build",
-        "start": "wp-scripts start",
+        "start": "wp-scripts start src/index.js blocks/contact-form-block.js",
         "dev": "wp-scripts start",
         "devFast": "wp-scripts start",
         "test": "echo \"Error: no test specified\" && exit 1"
@@ -15,12 +15,7 @@
     "license": "ISC",
     "dependencies": {
         "@wordpress/scripts": "*",
-        "normalize.css": "*",
-        "react": "^17.0.2",
-        "react-dom": "^17.0.2"
-    },
-    "devDependencies": {
-        "@babel/core": "^7.14.6",
-        "@babel/preset-react": "^7.13.13"
+        "axios": "^0.21.1",
+        "normalize.css": "*"
     }
 }
