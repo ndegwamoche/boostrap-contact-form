@@ -71,7 +71,7 @@ if (!class_exists('Contact_Form')) {
             wp_enqueue_style('bcf_font_awesome_front', '//cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/fontawesome.min.css');
             wp_enqueue_script('bcf_contact_form_script', plugin_dir_url(dirname(__FILE__))  . 'build/index.js', array(), false, true);
 
-            wp_localize_script('bcf_contact_form_constants', 'bcf_contact_form_data', array(
+            wp_localize_script('bcf_contact_form_script', 'bcf_contact_form_data', array(
                 'root_url' => get_site_url(),
                 'nonce' => wp_create_nonce('wp_rest')
             ));
