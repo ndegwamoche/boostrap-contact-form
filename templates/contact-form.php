@@ -46,17 +46,48 @@ if (!class_exists('Contact_Form')) {
             $email = sanitize_email($request['email']);
             $message = sanitize_textarea_field($request['message']);
 
+            $custom_logo_id = get_theme_mod('custom_logo');
+            $image = wp_get_attachment_image_src($custom_logo_id, 'full');
 
             // Send an email notification
-            $admin_email = get_option('bcf_admin_email');
+            $admin_email = esc_html(get_option('bcf_recipient_email'));
 
             $subject = 'New Contact Form Submission';
-            $body = "You have received a new message from $email:\n\n$message";
-            $headers = array('Content-Type: text/plain; charset=UTF-8', 'Disposition-Notification-To: yourEmailID\n');
 
-            wp_mail($admin_email, $subject, $body, $headers);
+            $body = '<table bgcolor="#fafafa" style="margin-left: auto;margin-right: auto;">
+            <tr><td></td>
+            <td bgcolor="#FFFFFF" style="border: 1px solid #eeeeee; background-color: #ffffff; border-radius:5px; display:block!important; max-width:600px!important; margin:0 auto!important; clear:both!important;">
+            <div style="padding:20px; max-width:600px; margin:0 auto; display:block;">
+            <table style="width: 100%;">
+            <tr><td>
+            <p style="text-align: center; display: block;  padding-bottom:20px;  margin-bottom:20px; border-bottom:1px solid #dddddd;"><img src="' . $image[0] . '" width="200"/></p>
+            <h1 style="font-weight: 600; font-size: 20px; margin: 20px 0 30px 0; color: #333333;">New Message from Website Contact Form</h1>
+            <h2 style="font-weight: 200; font-size: 16px; margin: 20px 0; color: #333333;"> First Name: ' . $firstName . '</h2>
+            <h2 style="font-weight: 200; font-size: 16px; margin: 20px 0; color: #333333;"> Last Name: ' . $lastName . '</h2>
+            <h2 style="font-weight: 200; font-size: 16px; margin: 20px 0; color: #333333;"> Phone: ' . $phone . ' </h2>
+            <h2 style="font-weight: 200; font-size: 16px; margin: 20px 0; color: #333333;"> Email: ' . $email . ' </h2>
+            <p style="font-weight: 200; font-size: 16px; margin: 20px 0; color: #333333;">Message: ' . $message . '</p>
+            <p style="text-align: center; display: block; padding-top:20px; font-weight: bold; margin-top:30px; color: #666666; border-top:1px solid #dddddd;">' . get_bloginfo('name') . '</p>
+            </td></tr>
+            </table>
+            </div></td><td></td></tr></table>';
 
-            //return new WP_Error('missing_data', 'Required data is missing', array('status' => 422));
+            $headers  = "From: Contact Form " . get_bloginfo('name') . " " . strip_tags($email) . "\r\n";
+            $headers .= "MIME-Version: 1.0\r\n";
+            $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
+
+            // Start output buffering to capture warnings
+            ob_start();
+            $mail_sent = mail($admin_email, $subject, $body, $headers);
+            $warning_message = ob_get_clean();
+
+            if (!$mail_sent) {
+                $error_message = 'Email could not be sent, please contact administrator @ ' . $admin_email;
+                if (!empty($warning_message)) {
+                    $error_message .= '. Warning: ' . strip_tags($warning_message);
+                }
+                return new WP_Error('email_not_sent', $error_message, array('status' => 500));
+            }
 
             return new WP_REST_Response(array(
                 'email' => $email,

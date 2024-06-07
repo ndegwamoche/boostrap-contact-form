@@ -12,14 +12,18 @@ if (!defined('ABSPATH')) {
 
         <ul class="contact-info__list list-style--none position-relative z-index-101">
             <li class="mb-4 pl-4">
-                <i class="fa fa-envelope"></i>&nbsp;&nbsp;<?php echo esc_html(get_option('bcf_recipient_email'));?>
+                <i class="fa fa-envelope"></i>&nbsp;&nbsp;<?php echo esc_html(get_option('bcf_recipient_email')); ?>
             </li>
-            <li class="mb-4 pl-4">
-                <i class="fa fa-phone"></i>&nbsp;&nbsp;<?php echo esc_html(get_option('bcf_recipient_phone_number'));?>
-            </li>
-            <li class="mb-4 pl-4">
-                <i class="fa fa-map-marker-alt"></i><?php echo esc_html(get_option('bcf_website_location'));?>
-            </li>
+            <?php if (get_option('bcf_recipient_phone_number') != null) { ?>
+                <li class="mb-4 pl-4">
+                    <i class="fa fa-phone"></i>&nbsp;&nbsp;<?php echo esc_html(get_option('bcf_recipient_phone_number')); ?>
+                </li>
+            <?php } ?>
+            <?php if (get_option('bcf_website_location') != null) { ?>
+                <li class="mb-4 pl-4">
+                    <i class="fa fa-map-marker"></i>&nbsp;&nbsp;<?php echo esc_html(get_option('bcf_website_location')); ?>
+                </li>
+            <?php } ?>
         </ul>
     </div>
 
@@ -66,8 +70,8 @@ if (!defined('ABSPATH')) {
                 </div>
 
                 <div class="col-sm-12 mb-3">
-                    
-                    <button type="submit" name="submit" class="btn btn-info send-message">Submit</button><br/>
+
+                    <button type="submit" name="submit" class="btn btn-info send-message">Send Message</button><br />
                     <small id="error-submit" class="form-text text-danger d-none"></small>
                 </div>
 
