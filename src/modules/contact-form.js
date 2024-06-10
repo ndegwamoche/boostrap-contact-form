@@ -3,18 +3,22 @@ import $ from "jquery";
 class ContactForm {
   constructor() {
     this.sendButton = $(".send-message");
+    this.bcfForm = $(".bcf-form-fields");
+
     this.fields = {
       firstName: $("#firstName"),
       lastName: $("#lastName"),
       email: $("#email"),
       message: $("#message")
     };
+
     this.errors = {
       firstName: $("#error-firstName"),
       lastName: $("#error-lastName"),
       email: $("#error-email"),
       message: $("#error-message")
     };
+
     this.events();
   }
 
@@ -23,7 +27,9 @@ class ContactForm {
   }
 
   sendMessage(e) {
+
     e.preventDefault();
+
     if (this.validateForm()) {
       var data = {
         firstName: $("#firstName").val(),
@@ -34,6 +40,9 @@ class ContactForm {
         status: "publish"
       };
 
+      this.sendButton.html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Sending...');
+      var that = this;
+      
       $.ajax({
         url: bcf_contact_form_data.root_url + "/wp-json/bcf/v1/submit-message",
         method: "POST",
@@ -42,10 +51,12 @@ class ContactForm {
         },
         data: data,
         success: function (response) {
+          that.sendButton.html('Send Message');
           $('.contact-form').addClass("d-none");
           $(".bcf-form-fields").html(`<div class="alert alert-success" role="alert">${response.message}</div>`);
         },
         error: function (response) {
+          that.sendButton.html('Send Message');
           $("#error-submit").removeClass("d-none");
           $("#error-submit").addClass("d-inline");
           $("#error-submit").html(response.responseJSON.message);

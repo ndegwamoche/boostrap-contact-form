@@ -76,7 +76,8 @@ if (!class_exists('Contact_Form')) {
             $headers .= "MIME-Version: 1.0\r\n";
             $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
 
-            // Start output buffering to capture warnings
+            error_reporting(E_ERROR | E_PARSE);
+
             ob_start();
             $mail_sent = mail($admin_email, $subject, $body, $headers);
             $warning_message = ob_get_clean();
@@ -86,7 +87,11 @@ if (!class_exists('Contact_Form')) {
                 if (!empty($warning_message)) {
                     $error_message .= '. Warning: ' . strip_tags($warning_message);
                 }
+
+                ob_end_clean();
+
                 return new WP_Error('email_not_sent', $error_message, array('status' => 500));
+                exit;
             }
 
             return new WP_REST_Response(array(

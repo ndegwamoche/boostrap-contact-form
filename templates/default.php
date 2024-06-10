@@ -6,6 +6,23 @@ if (!defined('ABSPATH')) {
 
 ?>
 
+<style>
+    /* .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 10;
+        color: white;
+        pointer-events: none;
+    } */
+</style>
+
 <div class="row bcf-form">
     <div class="col-lg-5 contact-info__wrapper p-5 order-lg-1 bcf-form-info">
         <h3 class="color--white mb-5">Get in Touch</h3>
@@ -27,7 +44,14 @@ if (!defined('ABSPATH')) {
         </ul>
     </div>
 
-    <div class="col-lg-7 contact-form__wrapper p-5 order-lg-2 bcf-form-fields">
+    <div class="col-lg-7 contact-form__wrapper p-5 order-lg-2 bcf-form-fields" style="position: relative;">
+
+        <!-- <div class="overlay">
+            <div class="spinner-grow text-primary" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div> -->
+
         <form action="#" class="contact-form form-validate" id="bcf-contact-form" onsubmit="return false;">
             <div class="row">
                 <div class="col-sm-6 mb-3">
@@ -70,7 +94,6 @@ if (!defined('ABSPATH')) {
                 </div>
 
                 <div class="col-sm-12 mb-3">
-
                     <button type="submit" name="submit" class="btn btn-info send-message">Send Message</button><br />
                     <small id="error-submit" class="form-text text-danger d-none"></small>
                 </div>

@@ -18,6 +18,7 @@ __webpack_require__.r(__webpack_exports__);
 class ContactForm {
   constructor() {
     this.sendButton = jquery__WEBPACK_IMPORTED_MODULE_0___default()(".send-message");
+    this.bcfForm = jquery__WEBPACK_IMPORTED_MODULE_0___default()(".bcf-form-fields");
     this.fields = {
       firstName: jquery__WEBPACK_IMPORTED_MODULE_0___default()("#firstName"),
       lastName: jquery__WEBPACK_IMPORTED_MODULE_0___default()("#lastName"),
@@ -46,6 +47,8 @@ class ContactForm {
         message: jquery__WEBPACK_IMPORTED_MODULE_0___default()("#message").val(),
         status: "publish"
       };
+      this.sendButton.html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Sending...');
+      var that = this;
       jquery__WEBPACK_IMPORTED_MODULE_0___default().ajax({
         url: bcf_contact_form_data.root_url + "/wp-json/bcf/v1/submit-message",
         method: "POST",
@@ -54,10 +57,12 @@ class ContactForm {
         },
         data: data,
         success: function (response) {
+          that.sendButton.html('Send Message');
           jquery__WEBPACK_IMPORTED_MODULE_0___default()('.contact-form').addClass("d-none");
           jquery__WEBPACK_IMPORTED_MODULE_0___default()(".bcf-form-fields").html(`<div class="alert alert-success" role="alert">${response.message}</div>`);
         },
         error: function (response) {
+          that.sendButton.html('Send Message');
           jquery__WEBPACK_IMPORTED_MODULE_0___default()("#error-submit").removeClass("d-none");
           jquery__WEBPACK_IMPORTED_MODULE_0___default()("#error-submit").addClass("d-inline");
           jquery__WEBPACK_IMPORTED_MODULE_0___default()("#error-submit").html(response.responseJSON.message);
