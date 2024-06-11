@@ -15,7 +15,6 @@
     "license": "ISC",
     "dependencies": {
         "@wordpress/scripts": "*",
-        "axios": "^0.21.1",
-        "normalize.css": "*"
+        "bootstrap": "^3.4.1"
     }
 }
